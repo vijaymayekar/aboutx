@@ -464,3 +464,7 @@ footer .footer-below {
 .toolbar-fixed .navbar-fixed-top {
     /*top:80px;*/
 }
+
+#contact [role="alert"]{
+    color: red;
+}

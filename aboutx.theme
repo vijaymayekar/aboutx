@@ -79,57 +79,57 @@ function aboutx_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormS
     '#title' => t('Portfolio link text'),
     '#default_value' => theme_get_setting('portfolio_link_text', 'aboutx')
   );
-  $number_of_project  = theme_get_setting('number_of_project', 'aboutx');
-  $form['aboutx_settings']['portfolio']['number_of_project'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Show number of project'),
-    '#default_value' => $number_of_project
-  );
-  if(empty($number_of_project)) {
-    $number_of_project = 4;
-  }
-  for($counter=1; $counter <= $number_of_project; $counter++) {
-    $form['aboutx_settings']['portfolio']['project_detail_' . $counter] = array(
-      '#type' => 'details',
-      '#title' => t('Project Details'),
-      '#open' => FALSE,
-    );
-    $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_title_'.$counter] = array(
-      '#type' => 'textfield',
-      '#title' => t('Project title'),
-      '#default_value' => theme_get_setting('number_of_project', 'aboutx'),
-    );
-    $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_description_'.$counter] = array(
-      '#type' => 'textarea',
-      '#title' => t('Project description'),
-      '#default_value' => theme_get_setting('number_of_project', 'aboutx'),
-    );
-    $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_image_'.$counter] = array(
-      '#type' => 'managed_file',
-      '#title' => t('Project image.'),
-      '#default_value' => theme_get_setting('project_image_'.$counter, 'aboutx'),
-      '#upload_location' => 'public://aboutx/project-picture/',
-      '#upload_validators' => array(
-        'file_validate_extensions' => array('gif png jpg jpeg'),
-        'file_validate_size' => array(0.6*1024*1024),
-      ),
-    );
-    $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_client_'.$counter] = array(
-      '#type' => 'textfield',
-      '#title' => t('Project client'),
-      '#default_value' => theme_get_setting('project_client_'.$counter, 'aboutx'),
-    );
-    $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_date_'.$counter] = array(
-      '#type' => 'textfield',
-      '#title' => t('Project date'),
-      '#default_value' => theme_get_setting('project_date_'.$counter, 'aboutx'),
-    );
-    $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_service_'.$counter] = array(
-      '#type' => 'textfield',
-      '#title' => t('Project service'),
-      '#default_value' => theme_get_setting('project_service_'.$counter, 'aboutx'),
-    );
-  }
+  // $number_of_project  = theme_get_setting('number_of_project', 'aboutx');
+  // $form['aboutx_settings']['portfolio']['number_of_project'] = array(
+  //   '#type' => 'textfield',
+  //   '#title' => t('Show number of project'),
+  //   '#default_value' => $number_of_project
+  // );
+  // if(empty($number_of_project)) {
+  //   $number_of_project = 4;
+  // }
+  // for($counter=1; $counter <= $number_of_project; $counter++) {
+  //   $form['aboutx_settings']['portfolio']['project_detail_' . $counter] = array(
+  //     '#type' => 'details',
+  //     '#title' => t('Project Details'),
+  //     '#open' => FALSE,
+  //   );
+  //   $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_title_'.$counter] = array(
+  //     '#type' => 'textfield',
+  //     '#title' => t('Project title'),
+  //     '#default_value' => theme_get_setting('number_of_project', 'aboutx'),
+  //   );
+  //   $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_description_'.$counter] = array(
+  //     '#type' => 'textarea',
+  //     '#title' => t('Project description'),
+  //     '#default_value' => theme_get_setting('number_of_project', 'aboutx'),
+  //   );
+  //   $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_image_'.$counter] = array(
+  //     '#type' => 'managed_file',
+  //     '#title' => t('Project image.'),
+  //     '#default_value' => theme_get_setting('project_image_'.$counter, 'aboutx'),
+  //     '#upload_location' => 'public://aboutx/project-picture/',
+  //     '#upload_validators' => array(
+  //       'file_validate_extensions' => array('gif png jpg jpeg'),
+  //       'file_validate_size' => array(0.6*1024*1024),
+  //     ),
+  //   );
+  //   $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_client_'.$counter] = array(
+  //     '#type' => 'textfield',
+  //     '#title' => t('Project client'),
+  //     '#default_value' => theme_get_setting('project_client_'.$counter, 'aboutx'),
+  //   );
+  //   $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_date_'.$counter] = array(
+  //     '#type' => 'textfield',
+  //     '#title' => t('Project date'),
+  //     '#default_value' => theme_get_setting('project_date_'.$counter, 'aboutx'),
+  //   );
+  //   $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_service_'.$counter] = array(
+  //     '#type' => 'textfield',
+  //     '#title' => t('Project service'),
+  //     '#default_value' => theme_get_setting('project_service_'.$counter, 'aboutx'),
+  //   );
+  // }
   $form['aboutx_settings']['about']['show_about'] = array(
     '#type' => 'checkbox',
     '#title' => t('Show about page'),
@@ -160,11 +160,11 @@ function aboutx_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormS
     '#title' => t('Contact link text'),
     '#default_value' => theme_get_setting('contact_link_text', 'aboutx')
   );
-  $form['aboutx_settings']['contact']['contact'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Contact'),
-    '#default_value' => theme_get_setting('contact', 'aboutx')
-  );
+  // $form['aboutx_settings']['contact']['contact'] = array(
+  //   '#type' => 'textarea',
+  //   '#title' => t('Contact'),
+  //   '#default_value' => theme_get_setting('contact', 'aboutx')
+  // );
 
   $form['aboutx_settings']['social']['facebook'] = array(
     '#type' => 'textfield',
@@ -269,4 +269,7 @@ function aboutx_preprocess_page(&$var) {
 		$aboutx_profile_picture = file_load($var['image'][0])->getFileUri();
     $var['aboutx_profile_picture'] = \Drupal\image\Entity\ImageStyle::load('medium')->buildUrl($aboutx_profile_picture);
 	}
+
+	$config = \Drupal::config('system.site');
+    $var['site_name'] = $config->get('name');
 }
