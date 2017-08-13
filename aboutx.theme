@@ -1,0 +1,272 @@
+<?php
+
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\file\Entity\File;
+
+
+function aboutx_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form_state, $form_id = NULL) {
+  // Work-around for a core bug affecting admin themes. See issue #943212.
+  if (isset($form_id)) {
+    return;
+  }
+
+  $form['aboutx_settings'] = array(
+    '#type' => 'details',
+    '#title' => t('Aboutx Settings'),
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+  );
+
+  $form['aboutx_settings']['top'] = array(
+    '#type' => 'details',
+    '#title' => t('Top section'),
+    '#open' => FALSE,
+  );
+  $form['aboutx_settings']['portfolio'] = array(
+    '#type' => 'details',
+    '#title' => t('Portfolio'),
+    '#open' => FALSE,
+  );
+  $form['aboutx_settings']['about'] = array(
+    '#type' => 'details',
+    '#title' => t('About Me'),
+    '#open' => FALSE,
+  );
+  $form['aboutx_settings']['contact'] = array(
+    '#type' => 'details',
+    '#title' => t('Contact'),
+    '#open' => FALSE,
+  );
+  $form['aboutx_settings']['social'] = array(
+    '#type' => 'details',
+    '#title' => t('Social'),
+    '#open' => FALSE,
+  );
+  $form['aboutx_settings']['misc'] = array(
+    '#type' => 'details',
+    '#title' => t('Mics'),
+    '#open' => FALSE,
+  );
+
+  $form['aboutx_settings']['top']['image'] = array(
+    '#type' => 'managed_file',
+    '#title' => t('Upload your profile picture.'),
+    '#default_value' => theme_get_setting('image', 'aboutx'),
+    '#upload_location' => 'public://aboutx/profile-picture/',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('gif png jpg jpeg'),
+      'file_validate_size' => array(0.6*1024*1024),
+    ),
+  );
+  $form['aboutx_settings']['top']['name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Enter your name'),
+    '#default_value' => theme_get_setting('name', 'aboutx'),
+  );
+  $form['aboutx_settings']['top']['description'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Enter your desigination / role'),
+    '#default_value' => theme_get_setting('description', 'aboutx'),
+    '#description'=>t('Web Developer - Graphic Artist - User Experience Designer'),
+    );
+  $form['aboutx_settings']['portfolio']['show_portfolio'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show project page'),
+    '#default_value' => theme_get_setting('show_portfolio', 'aboutx')
+  );
+  $form['aboutx_settings']['portfolio']['portfolio_link_text'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Portfolio link text'),
+    '#default_value' => theme_get_setting('portfolio_link_text', 'aboutx')
+  );
+  $number_of_project  = theme_get_setting('number_of_project', 'aboutx');
+  $form['aboutx_settings']['portfolio']['number_of_project'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Show number of project'),
+    '#default_value' => $number_of_project
+  );
+  if(empty($number_of_project)) {
+    $number_of_project = 4;
+  }
+  for($counter=1; $counter <= $number_of_project; $counter++) {
+    $form['aboutx_settings']['portfolio']['project_detail_' . $counter] = array(
+      '#type' => 'details',
+      '#title' => t('Project Details'),
+      '#open' => FALSE,
+    );
+    $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_title_'.$counter] = array(
+      '#type' => 'textfield',
+      '#title' => t('Project title'),
+      '#default_value' => theme_get_setting('number_of_project', 'aboutx'),
+    );
+    $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_description_'.$counter] = array(
+      '#type' => 'textarea',
+      '#title' => t('Project description'),
+      '#default_value' => theme_get_setting('number_of_project', 'aboutx'),
+    );
+    $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_image_'.$counter] = array(
+      '#type' => 'managed_file',
+      '#title' => t('Project image.'),
+      '#default_value' => theme_get_setting('project_image_'.$counter, 'aboutx'),
+      '#upload_location' => 'public://aboutx/project-picture/',
+      '#upload_validators' => array(
+        'file_validate_extensions' => array('gif png jpg jpeg'),
+        'file_validate_size' => array(0.6*1024*1024),
+      ),
+    );
+    $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_client_'.$counter] = array(
+      '#type' => 'textfield',
+      '#title' => t('Project client'),
+      '#default_value' => theme_get_setting('project_client_'.$counter, 'aboutx'),
+    );
+    $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_date_'.$counter] = array(
+      '#type' => 'textfield',
+      '#title' => t('Project date'),
+      '#default_value' => theme_get_setting('project_date_'.$counter, 'aboutx'),
+    );
+    $form['aboutx_settings']['portfolio']['project_detail_'.$counter]['project_service_'.$counter] = array(
+      '#type' => 'textfield',
+      '#title' => t('Project service'),
+      '#default_value' => theme_get_setting('project_service_'.$counter, 'aboutx'),
+    );
+  }
+  $form['aboutx_settings']['about']['show_about'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show about page'),
+    '#default_value' => theme_get_setting('show_about', 'aboutx')
+  );
+  $form['aboutx_settings']['about']['about_link_text'] = array(
+    '#type' => 'textfield',
+    '#title' => t('About link text'),
+    '#default_value' => theme_get_setting('about_link_text', 'aboutx')
+  );
+  $form['aboutx_settings']['about']['about_left'] = array(
+    '#type' => 'textarea',
+    '#title' => t('About Left'),
+    '#default_value' => theme_get_setting('about_left', 'aboutx')
+  );
+  $form['aboutx_settings']['about']['about_right'] = array(
+    '#type' => 'textarea',
+    '#title' => t('About right'),
+    '#default_value' => theme_get_setting('about_right','aboutx')
+  );
+  $form['aboutx_settings']['contact']['show_contact'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show contact page'),
+    '#default_value' => theme_get_setting('show_contact', 'aboutx')
+  );
+  $form['aboutx_settings']['contact']['contact_link_text'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Contact link text'),
+    '#default_value' => theme_get_setting('contact_link_text', 'aboutx')
+  );
+  $form['aboutx_settings']['contact']['contact'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Contact'),
+    '#default_value' => theme_get_setting('contact', 'aboutx')
+  );
+
+  $form['aboutx_settings']['social']['facebook'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Facebook'),
+    '#default_value' => theme_get_setting('facebook', 'aboutx')
+  );
+  $form['aboutx_settings']['social']['twitter'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Twitter'),
+    '#default_value' => theme_get_setting('twitter', 'aboutx')
+  );
+  $form['aboutx_settings']['social']['googleplush'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Google plus'),
+    '#default_value' => theme_get_setting('googleplush', 'aboutx')
+  );
+  $form['aboutx_settings']['social']['linkedin'] = array(
+    '#type' => 'textfield',
+    '#title' => t('LinkedIn'),
+    '#default_value' => theme_get_setting('linkedin', 'aboutx')
+  );
+  $form['aboutx_settings']['social']['dribble'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Dribble'),
+    '#default_value' => theme_get_setting('dribble', 'aboutx')
+  );
+  $form['aboutx_settings']['misc']['location'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Location'),
+    '#default_value' => theme_get_setting('location', 'aboutx')
+  );
+  $form['aboutx_settings']['misc']['about_me'] = array(
+    '#type' => 'textarea',
+    '#title' => t('About Me'),
+    '#default_value' => theme_get_setting('about_me', 'aboutx')
+  );
+
+  $form['aboutx_settings']['misc']['copyright'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Copyright'),
+    '#default_value' => theme_get_setting('copyright', 'aboutx')
+  );
+
+  $filename = drupal_get_path('theme', 'aboutx') . '/aboutx.theme';
+  $form_state->addBuildInfo('files', array($filename));
+  $form['#submit'][] = 'aboutx_system_theme_settings_form_image_submit';
+}
+
+function aboutx_system_theme_settings_form_image_submit(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  $account = \Drupal::currentUser();
+  $values = $form_state->getValues();
+  for ($i = 0; $i <= $values['number_of_project']; $i++) {
+    if (isset($values["project_image_{$i}"]) && !empty($values["project_image_{$i}"])) {
+      // Load the file via file.fid.
+      if ($file = File::load($values["project_image_{$i}"][0])) {
+        // Change status to permanent.
+        $file->setPermanent();
+        $file->save();
+        $file_usage = \Drupal::service('file.usage');
+        $file_usage->add($file, 'user', 'user', $account->id());
+      }
+    }
+  }
+
+  if (isset($values["image"]) && !empty($values["image"])) {
+    // Load the file via file.fid.
+    if ($file = File::load($values["image"][0])) {
+      // Change status to permanent.
+      $file->setPermanent();
+      $file->save();
+      $file_usage = \Drupal::service('file.usage');
+      $file_usage->add($file, 'user', 'user', $account->id());
+    }
+  }
+}
+
+/**
+ * Implement hook_preprocess_page().
+ */
+function aboutx_preprocess_page(&$var) {
+  $theme_name = \Drupal::theme()->getActiveTheme()->getName();
+  $theme_settings = \Drupal::config($theme_name . '.settings');
+  CacheableMetadata::createFromRenderArray($var)
+    ->addCacheableDependency($theme_settings)
+    ->applyTo($var);
+  $var += $theme_settings->getOriginal();
+
+	for($i=1; $i <= $var['number_of_project']; $i++ ) {
+		if(isset($var['project_image_'.$i]) && $var['project_image_'.$i]) {
+      $aboutx_project_image = file_load($var['project_image_' . $i][0])->getFileUri();
+      $var['aboutx_projects'][$i]['image'] = \Drupal\image\Entity\ImageStyle::load('large')->buildUrl($aboutx_project_image);
+			$var['aboutx_projects'][$i]['thumb_image'] = \Drupal\image\Entity\ImageStyle::load('medium')->buildUrl($aboutx_project_image);
+      $var['aboutx_projects'][$i]['title'] = $var['project_title_'.$i];
+      $var['aboutx_projects'][$i]['description'] = $var['project_description_'.$i];
+      $var['aboutx_projects'][$i]['client'] = $var['project_client_'.$i];
+      $var['aboutx_projects'][$i]['date'] = $var['project_date_'.$i];
+      $var['aboutx_projects'][$i]['service'] = $var['project_service_'.$i];
+		}
+	}
+
+	if(isset($var['image']) && $var['image']) {
+		$aboutx_profile_picture = file_load($var['image'][0])->getFileUri();
+    $var['aboutx_profile_picture'] = \Drupal\image\Entity\ImageStyle::load('medium')->buildUrl($aboutx_profile_picture);
+	}
+}

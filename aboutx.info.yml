@@ -1,0 +1,19 @@
+name: Aboutx
+description: A starter theme for Drupal 8.
+type: theme
+core: 8.x
+libraries:
+  - aboutx/bootstrap
+  - aboutx/global-css
+  - aboutx/global-js
+regions:
+  header: 'Header'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  content_header: 'Content Header'
+  content: 'Content'
+  contact_footer: 'Contact Footer'
+  footer_above: 'Footer Above'
+  footer_below: 'Footer Below'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'

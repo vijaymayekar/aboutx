@@ -1,0 +1,23 @@
+global-css:
+  css:
+    theme:
+      css/freelancer.css: {}
+      font-awesome/css/font-awesome.min.css: {}
+
+global-js:
+  js:
+    js/jquery.easing.min.js: {}
+    js/classie.js: {}
+    js/cbpAnimatedHeader.js: {}
+    js/jqBootstrapValidation.js: {}
+    js/contact_me.js: {}
+    js/freelancer.js: {}
+  dependencies:
+   - core/jquery
+
+bootstrap:
+  css:
+    theme:
+      vendor/bootstrap/css/bootstrap.min.css: {}
+  js:
+    vendor/bootstrap/js/bootstrap.min.js: {}

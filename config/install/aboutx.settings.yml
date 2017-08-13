@@ -1,0 +1,3 @@
+zen_breadcrumb: yes
+zen_breadcrumb_separator: ' › '
+zen_breadcrumb_home: 1
