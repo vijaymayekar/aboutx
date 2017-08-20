@@ -216,18 +216,18 @@ function aboutx_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormS
 function aboutx_system_theme_settings_form_image_submit(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
   $account = \Drupal::currentUser();
   $values = $form_state->getValues();
-  for ($i = 0; $i <= $values['number_of_project']; $i++) {
-    if (isset($values["project_image_{$i}"]) && !empty($values["project_image_{$i}"])) {
-      // Load the file via file.fid.
-      if ($file = File::load($values["project_image_{$i}"][0])) {
-        // Change status to permanent.
-        $file->setPermanent();
-        $file->save();
-        $file_usage = \Drupal::service('file.usage');
-        $file_usage->add($file, 'user', 'user', $account->id());
-      }
-    }
-  }
+  // for ($i = 0; $i <= $values['number_of_project']; $i++) {
+  //   if (isset($values["project_image_{$i}"]) && !empty($values["project_image_{$i}"])) {
+  //     // Load the file via file.fid.
+  //     if ($file = File::load($values["project_image_{$i}"][0])) {
+  //       // Change status to permanent.
+  //       $file->setPermanent();
+  //       $file->save();
+  //       $file_usage = \Drupal::service('file.usage');
+  //       $file_usage->add($file, 'user', 'user', $account->id());
+  //     }
+  //   }
+  // }
 
   if (isset($values["image"]) && !empty($values["image"])) {
     // Load the file via file.fid.
